@@ -1,0 +1,41 @@
+/* ---- badge on the destination square ---- */
+.cs-sq{position:absolute;width:12.5%;height:12.5%;pointer-events:none;z-index:6;container-type:size}
+.cs-badge{position:absolute;right:-8%;top:-8%;width:42cqw;height:42cqw;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ color:#fff;font:700 24cqw/1 'Noto Sans',system-ui,sans-serif;box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.cs-badge svg{width:70%;height:70%}
+.cs-brilliant{background:#1baca6}.cs-great{background:#5c8bb0}.cs-best{background:#759900}
+.cs-inaccuracy{background:#f7c631;color:#3b3000;text-shadow:none}.cs-mistake{background:#ffa459}.cs-miss{background:#ff7769}.cs-blunder{background:#fa412d}
+.cs-excellent{background:#81b64c}.cs-good{background:#7c9f6a}.cs-book{background:#d5a47d}
+/* ---- square tint (inserted inside cg-board, below the pieces) ---- */
+.cs-tint{position:absolute;width:12.5%;height:12.5%;z-index:1;pointer-events:none}
+.cs-tint-book{background:rgba(213,164,125,.55)}
+.cs-tint-brilliant{background:rgba(27,172,166,.55)}
+/* ---- Brilliant animation: tint pulse, ripple rings, big "!!", "Brilliant!" pill, badge pop ---- */
+.cs-pop{animation:csPop .5s cubic-bezier(.2,1.7,.4,1) both}
+.cs-ring{position:absolute;right:-8%;top:-8%;width:42cqw;height:42cqw;border-radius:50%;border:.6cqw solid #1baca6;opacity:0;animation:csRing 1s ease-out .05s 2 both}
+.cs-ring2{animation-delay:.25s}
+.cs-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font:800 62cqw/1 'Noto Sans',system-ui,sans-serif;
+ text-shadow:0 0 6cqw rgba(0,0,0,.45);opacity:0;animation:csBig 1.5s ease-out both}
+.cs-label{position:absolute;left:50%;top:-14%;transform:translate(-50%,-50%);white-space:nowrap;background:#fff;color:#1baca6;font:800 19cqw/1 'Noto Sans',system-ui,sans-serif;
+ padding:7cqw 14cqw;border-radius:40cqw;box-shadow:0 2px 8px rgba(0,0,0,.35);opacity:0;animation:csLabel 2.4s ease-out both}
+.cs-top .cs-label{top:118%}
+.cs-edge-r .cs-label{left:auto;right:0;transform:translate(0,-50%)}
+.cs-edge-l .cs-label{left:0;transform:translate(0,-50%)}
+.cs-tint.cs-anim{animation:csTint 1.2s ease-out both}
+@keyframes csPop{0%{transform:scale(.15);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes csRing{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+@keyframes csBig{0%{transform:scale(1.7);opacity:0}15%{transform:scale(1);opacity:.95}70%{opacity:.9}100%{transform:scale(1);opacity:0}}
+@keyframes csLabel{0%{opacity:0;margin-top:8cqw;scale:.7}10%{opacity:1;margin-top:0;scale:1.07}16%{scale:1}82%{opacity:1}100%{opacity:0}}
+@keyframes csTint{0%{background:rgba(27,172,166,.95)}100%{background:rgba(27,172,166,.55)}}
+@media (prefers-reduced-motion:reduce){.cs-ring,.cs-big,.cs-label{display:none}.cs-pop,.cs-tint.cs-anim{animation:none}}
+
+/* ---- progress chips ---- */
+.cs-status{position:absolute;left:6px;z-index:7;pointer-events:none;background:rgba(0,0,0,.65);color:#fff;font:600 11px/1 system-ui,sans-serif;padding:3px 8px;border-radius:10px}
+.cs-status-game{bottom:6px}.cs-status-move{bottom:26px;background:#1baca6}
+.cs-status-eng{top:6px;bottom:auto;background:rgba(0,0,0,.6)}.cs-status-err{background:#b3261e!important;white-space:normal;max-width:90%;line-height:1.3}
+
+/* Lichess draws its own move glyph (?! ? ?? ...) on the board, in chessground's custom-SVG layer. Ours replace it, so hide Lichess's to stop the two overlapping.
+   The move list keeps Lichess's own marks; engine arrows live in a different layer (svg.cg-shapes) and are untouched. */
+.analyse__board svg.cg-custom-svgs,
+.analyse__board .cg-wrap svg.cg-custom-svgs,
+.analyse__board .cg-wrap .glyph { display: none !important; }

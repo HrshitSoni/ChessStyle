@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Lichess Move Badges",
+  "version": "0.10.9",
+  "description": "Adds Brilliant, Great, Best, Excellent, Good and Book badges to Lichess game review, using Lichess's own analysis plus a bundled Stockfish. Unofficial.",
+  "permissions": [
+    "offscreen",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://lichess.org/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lichess.org/*"
+      ],
+      "css": [
+        "badges.css"
+      ],
+      "js": [
+        "dist/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
